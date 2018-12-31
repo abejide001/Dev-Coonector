@@ -1,2 +1,3 @@
 DB_USER='enter your username'
 DB_PASSWORD='enter your password'
+SECRET='secret'
