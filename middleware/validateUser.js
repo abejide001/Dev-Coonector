@@ -1,31 +1,52 @@
 module.exports = {
   validateUser(req, res, next) {
     const { name, email, password } = req.body;
-    if (!name || !email || !password) {
-      res.status(400).json({
+    if (!name) {
+      res.status(400).send({
         success: false,
-        message: 'Fields cannot be empty',
+        messageName: 'Name Field cannot be empty',
       });
       return;
     }
-    if (name.length < 1) {
-      res.status(400).json({
+    if (!password) {
+      res.status(400).send({
         success: false,
-        message: 'Name length should bg greater than 1',
+        messagePassword: 'Password Field cannot be empty',
       });
       return;
     }
-    if (email.length < 1) {
+    if (!email) {
+      res.status(400).send({
+        success: false,
+        messageEmail: 'Email Field cannot be empty',
+      });
+      return;
+    }
+    if (name.length < 3) {
       res.status(400).json({
         success: false,
-        message: 'Email length should bg greater than 1',
+        messageName: 'Name length should be greater than 3',
+      });
+      return;
+    }
+    if (email.length < 5) {
+      res.status(400).json({
+        success: false,
+        messageEmail: 'Email length should be greater than 5',
+      });
+      return;
+    }
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      res.status(400).send({
+        success: false,
+        messageEmail: 'enter a valid email',
       });
       return;
     }
     if (password.length < 1) {
       res.status(400).json({
         success: false,
-        message: 'Password length should bg greater than 1',
+        messagePassword: 'Password length should be greater than 1',
       });
       return;
     }
@@ -34,24 +55,38 @@ module.exports = {
 
   validateUserLogin(req, res, next) {
     const { email, password } = req.body;
-    if (!email || !password) {
-      res.status(400).json({
+    if (!email) {
+      res.status(400).send({
         success: false,
-        message: 'Fields cannot be empty',
+        messageEmail: 'Email Field cannot be empty',
       });
       return;
     }
-    if (email.length < 1) {
+    if (!password) {
+      res.status(400).send({
+        success: false,
+        messagePassword: 'Password Field cannot be empty',
+      });
+      return;
+    }
+    if (email.length < 5) {
       res.status(400).json({
         success: false,
-        message: 'Email length should bg greater than 1',
+        messageEmail: 'Email length should be greater than 5',
+      });
+      return;
+    }
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      res.status(400).send({
+        success: false,
+        messageEmail: 'enter a valid email',
       });
       return;
     }
     if (password.length < 1) {
       res.status(400).json({
         success: false,
-        message: 'Password length should bg greater than 1',
+        messagePassword: 'Password length should be greater than 1',
       });
       return;
     }
