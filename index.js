@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 app.use('/api/post', post);
 app.use('/api/profile', profile);
 app.use('/api/user', user);
-app.get('/', (req, res) => res.send('Hello, welcome to dev'));
+// app.get('/', (req, res) => res.send('Hello, welcome to dev'));
 
 // serve static file
 if (process.env.NODE_ENV === 'production') {
