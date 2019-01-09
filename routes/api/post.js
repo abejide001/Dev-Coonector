@@ -11,6 +11,7 @@ router.get('/', Auth.verifyToken, Post.getPosts);
 router.delete('/:id', Auth.verifyToken, Post.deletePost);
 router.get('/:id', Auth.verifyToken, Post.getPost);
 router.post('/like/:id', Auth.verifyToken, Post.likePost);
+router.post('/unlike/:id', Auth.verifyToken, Post.unlikePost);
 router.post('/comment/:id', Auth.verifyToken, ValidateComment.validateComment, Post.addComment);
 router.delete('/comment/:id/:comment_id', Auth.verifyToken, Post.removeComment);
 
