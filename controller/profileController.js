@@ -4,7 +4,7 @@ const UserModel = require('../model/User');
 class Profile {
   static async getProfile(req, res) {
     // eslint-disable-next-line no-underscore-dangle
-    const profile = await ProfileModel.findOne({ user: req.user.userId });
+    const profile = await ProfileModel.findOne({ user: req.user.userId._id });
     if (!profile) {
       res.status(404).json({
         success: false,
@@ -33,7 +33,7 @@ class Profile {
     profileFields.social.instagram = req.body.instagram;
     profileFields.social.facebook = req.body.facebook;
     // eslint-disable-next-line no-underscore-dangle
-    const profile = await ProfileModel.findOne({ user: req.user.userId }).populate('user', ['name']);
+    const profile = await ProfileModel.findOne({ user: req.user.userId._id }).populate('user', ['name']);
     if (profile) {
       res.status(404).json({
         success: false,
@@ -89,7 +89,7 @@ class Profile {
 
   static async addExperience(req, res) {
     // eslint-disable-next-line no-underscore-dangle
-    const profile = await ProfileModel.findOne({ user: req.user.userId });
+    const profile = await ProfileModel.findOne({ user: req.user.userId._id });
     if (!profile) {
       res.status(404).json({ success: false, message: 'user with profile, not found ' });
       return;
@@ -110,7 +110,7 @@ class Profile {
 
   static async addEducation(req, res) {
     // eslint-disable-next-line no-underscore-dangle
-    const profile = await ProfileModel.findOne({ user: req.user.userId });
+    const profile = await ProfileModel.findOne({ user: req.user.userId._id });
     if (!profile) {
       res.status(404).json({ success: false, message: 'user with profile, not found ' });
       return;
@@ -130,7 +130,7 @@ class Profile {
   }
 
   static async deleteExperience(req, res) {
-    const profile = await ProfileModel.findOne({ user: req.user.userId });
+    const profile = await ProfileModel.findOne({ user: req.user.userId._id });
     const removeIndex = profile.experience.map(item => item.id).indexOf(req.params.exp_id);
     profile.experience.splice(removeIndex);
     await profile.save();
@@ -139,8 +139,8 @@ class Profile {
 
   static async deleteProfile(req, res) {
     try {
-      await ProfileModel.findOneAndRemove({ user: req.user.userId });
-      const user = await UserModel.findOneAndRemove({ _id: req.user.userId });
+      await ProfileModel.findOneAndRemove({ user: req.user.userId._id });
+      const user = await UserModel.findOneAndRemove({ _id: req.user.userId._id });
       if (!user) {
         res.status(400).json({ success: true, message: 'User does not exist' });
         return;

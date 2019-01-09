@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 const PostModel = require('../model/Post');
 const ProfileModel = require('../model/Profile');
 
@@ -24,11 +25,13 @@ class Post {
   }
 
   static async deletePost(req, res) {
-    ProfileModel.findOne({ user: req.user.userId })
+    // eslint-disable-next-line no-underscore-dangle
+    ProfileModel.findOne({ user: req.user.userId._id })
       .then(() => {
         PostModel.findById(req.params.id)
           .then((post) => {
-            if (post.user.toString() !== req.user.userId) {
+            // eslint-disable-next-line no-underscore-dangle
+            if (post.user.toString() !== req.user.userId._id) {
               res.status(401).json({ success: false, message: 'not authorized ' });
               return;
             }
@@ -50,15 +53,15 @@ class Post {
   }
 
   static likePost(req, res) {
-    ProfileModel.findOne({ user: req.user.userId })
+    ProfileModel.findOne({ user: req.user.userId._id })
       .then(() => {
         PostModel.findById(req.params.id)
           .then((post) => {
-            if (post.likes.filter(like => like.user.toString() === req.user.userId).length > 0) {
+            if (post.likes.filter(like => like.user.toString() === req.user.userId._id).length > 0) {
               res.status(400).json({ success: false, message: 'post already liked' });
               return;
             }
-            post.likes.unshift({ user: req.user.userId });
+            post.likes.unshift({ user: req.user.userId._id });
             post.save().then(likePost => res.status(200).json(likePost));
           });
       });
@@ -66,11 +69,11 @@ class Post {
 
 
   static unlikePost(req, res) {
-    ProfileModel.findOne({ user: req.user.userId })
+    ProfileModel.findOne({ user: req.user.userId._id })
       .then(() => {
         PostModel.findById(req.params.id)
           .then((post) => {
-            if (post.likes.filter(like => like.user.toString() === req.user.userId).length === 0) {
+            if (post.likes.filter(like => like.user.toString() === req.user.userId._id ).length === 0) {
               res.status(400).json({ success: false, message: 'you have not liked' });
               return;
             }
