@@ -31,7 +31,7 @@ class User {
       });
     } catch (err) {
       // eslint-disable-next-line no-console
-      console.log(err.message);
+      res.send(err.message)
     }
   }
 
@@ -53,8 +53,7 @@ class User {
       });
       return;
     }
-    const token = Helper.generateToken(user._id);
-    console.log(token)
+    const token = Helper.generateToken(user);
     res.status(200).json({
       success: true,
       message: 'logged in',
