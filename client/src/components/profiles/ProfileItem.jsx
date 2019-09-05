@@ -4,7 +4,6 @@ import isEmpty from '../../validations/isEmpty';
 export default class ProfileItem extends Component {
   render() {
   const { profile } = this.props;
-  console.log(profile.user)
     return (
       <div className="card card-body bg-light mb-3">
         <div className="row">

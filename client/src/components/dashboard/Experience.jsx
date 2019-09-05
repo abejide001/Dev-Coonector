@@ -8,7 +8,6 @@ class Experience extends Component {
        this.props.deleteExperience(id, this.props.history)
     }
 	render() {
-		console.log(this.props.experience)
 		const experience = this.props.experience.map((exp) => (
 			<tr key={exp._id}>
 				<td>{exp.company}</td>

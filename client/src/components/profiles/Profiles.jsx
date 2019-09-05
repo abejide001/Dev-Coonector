@@ -15,7 +15,6 @@ class Profiles extends Component {
       } 
       else {
        if (Object.keys(profiles).length > 0) {
-          console.log(profiles.profiles)
              profileItems = profiles.profiles.map(profile => <ProfileItem key={profile._id} profile={profile}/>)
               } else {
                   profileItems = <h2>No profile found</h2>

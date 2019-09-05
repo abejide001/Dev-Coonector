@@ -4,7 +4,6 @@ import ProfileHeader from './ProfileHeader';
 import ProfileAbout from './ProfileAbout';
 import ProfileGithub from './ProfileGithub';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { getProfileByHandle } from '../../actions/profileActions';
 import Spinner from '../common/Spinner';
 class Profile extends Component {
@@ -20,7 +19,6 @@ class Profile extends Component {
       } 
 	render() {
         const { profile, loading } = this.props.profile;
-        console.log(profile)
 		let profileContent;
 		if (profile === null || loading) {
 			profileContent = <Spinner />;

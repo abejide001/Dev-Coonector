@@ -1,9 +1,9 @@
+/* eslint-disable no-underscore-dangle */
 const ProfileModel = require('../model/Profile');
 const UserModel = require('../model/User');
 
 class Profile {
   static async getProfile(req, res) {
-    // eslint-disable-next-line no-underscore-dangle
     const profile = await ProfileModel.findOne({ user: req.user.userId._id });
     if (!profile) {
       res.status(404).json({
@@ -17,7 +17,6 @@ class Profile {
 
   static async createProfile(req, res) {
     const profileFields = {};
-    // eslint-disable-next-line no-underscore-dangle
     profileFields.user = req.user.userId;
     profileFields.handle = req.body.handle;
     profileFields.bio = req.body.bio;
@@ -32,7 +31,6 @@ class Profile {
     profileFields.social.twitter = req.body.twitter;
     profileFields.social.instagram = req.body.instagram;
     profileFields.social.facebook = req.body.facebook;
-    // eslint-disable-next-line no-underscore-dangle
     const profile = await ProfileModel.findOne({ user: req.user.userId._id }).populate('user', ['name']);
     if (profile) {
       res.status(404).json({
@@ -88,7 +86,6 @@ class Profile {
   }
 
   static async addExperience(req, res) {
-    // eslint-disable-next-line no-underscore-dangle
     const profile = await ProfileModel.findOne({ user: req.user.userId._id });
     if (!profile) {
       res.status(404).json({ success: false, message: 'user with profile, not found ' });
@@ -109,7 +106,6 @@ class Profile {
   }
 
   static async addEducation(req, res) {
-    // eslint-disable-next-line no-underscore-dangle
     const profile = await ProfileModel.findOne({ user: req.user.userId._id });
     if (!profile) {
       res.status(404).json({ success: false, message: 'user with profile, not found ' });
@@ -147,8 +143,7 @@ class Profile {
       }
       res.status(200).json({ success: true, message: 'Deleted Successfully' });
     } catch (e) {
-      // eslint-disable-next-line no-console
-      console.log(e.message);
+      res.send(e);
     }
   }
 }

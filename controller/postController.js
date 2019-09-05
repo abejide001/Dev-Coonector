@@ -25,12 +25,10 @@ class Post {
   }
 
   static async deletePost(req, res) {
-    // eslint-disable-next-line no-underscore-dangle
     ProfileModel.findOne({ user: req.user.userId._id })
       .then(() => {
         PostModel.findById(req.params.id)
           .then((post) => {
-            // eslint-disable-next-line no-underscore-dangle
             if (post.user.toString() !== req.user.userId._id) {
               res.status(401).json({ success: false, message: 'not authorized ' });
               return;
@@ -57,7 +55,9 @@ class Post {
       .then(() => {
         PostModel.findById(req.params.id)
           .then((post) => {
-            if (post.likes.filter(like => like.user.toString() === req.user.userId._id).length > 0) {
+            if (post.likes.filter(
+              like => like.user.toString() === req.user.userId._id,
+            ).length > 0) {
               res.status(400).json({ success: false, message: 'post already liked' });
               return;
             }
@@ -73,7 +73,10 @@ class Post {
       .then(() => {
         PostModel.findById(req.params.id)
           .then((post) => {
-            if (post.likes.filter(like => like.user.toString() === req.user.userId._id ).length === 0) {
+            if (
+              post.likes.filter(
+                like => like.user.toString() === req.user.userId._id,
+              ).length === 0) {
               res.status(400).json({ success: false, message: 'you have not liked' });
               return;
             }
@@ -108,12 +111,12 @@ class Post {
   static removeComment(req, res) {
     PostModel.findById(req.params.id)
       .then((post) => {
-        // eslint-disable-next-line no-underscore-dangle
-        if (post.comments.filter(comment => comment._id.toString() === req.params.comment_id).length === 0) {
+        if (post.comments.filter(
+          comment => comment._id.toString() === req.params.comment_id,
+        ).length === 0) {
           res.status(400).json({ success: false, message: 'comment does not exist' });
           return;
         }
-        // eslint-disable-next-line no-underscore-dangle
         const removeIndex = post.likes.map(item => item._id.toString())
           .indexOf(req.params.comment_id);
         post.comments.splice(removeIndex, 1);

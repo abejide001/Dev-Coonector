@@ -7,16 +7,13 @@ import { deletePost, addLike, removeLike } from '../../actions/postActions'
 		window.location.reload()
     }
     handleLike = id => {
-        console.log(id)
         this.props.addLike(id)
     }
     handleUnLike = id => {
         this.props.removeLike(id)
-        console.log(id)
     }
   render() {
       const { post, auth, showActions } = this.props;   
-      console.log(auth)
     return (
       <div className="card card-body mb-3">
               <div className="row">
